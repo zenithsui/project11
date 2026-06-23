@@ -1,37 +1,5 @@
 @import "./styles/fonts.css";
 
-/* Site header */
-.site-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10000;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 24px;
-  background: rgba(245, 236, 215, 0.92);
-  border-bottom: 1.5px solid #c4a882;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  box-shadow: 0 2px 12px rgba(92, 61, 46, 0.15);
-}
-
-.site-header__logo {
-  height: 40px;
-  width: auto;
-  display: block;
-}
-
-.site-header__name {
-  font-family: "Playfair Display", Georgia, serif;
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  color: #3d2b1f;
-}
-
 
 
 * {
@@ -96,7 +64,7 @@ body {
 /* Top-right button group */
 .top-right-controls {
   position: fixed;
-  top: 72px;
+  top: 32px;
   right: 32px;
   z-index: 100;
   display: flex;
