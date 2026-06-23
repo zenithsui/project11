@@ -411,3 +411,97 @@ body {
     font-size: 20px;
   }
 }
+
+/* MagneticDock */
+.preloader__dock {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 24px;
+  background: rgba(250, 235, 220, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(210, 155, 115, 0.35);
+  box-shadow: 0 8px 40px rgba(180, 100, 60, 0.18), 0 2px 8px rgba(180, 100, 60, 0.1);
+}
+
+.dock-item {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  transform-origin: bottom center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dock-icon-wrap {
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #f5d8c0, #edc0a0);
+  box-shadow: 0 4px 16px rgba(180, 100, 60, 0.15), inset 0 1px 0 rgba(255, 240, 230, 0.5);
+  border: 1px solid rgba(200, 130, 90, 0.35);
+  transition: background 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+}
+
+.dock-item:hover .dock-icon-wrap {
+  background: linear-gradient(145deg, #f0c9a8, #e8a882);
+  box-shadow: 0 8px 32px rgba(180, 100, 60, 0.25), inset 0 1px 0 rgba(255, 240, 230, 0.7);
+}
+
+.dock-svg {
+  width: 58%;
+  height: 58%;
+  color: #7a3e1e;
+}
+
+.dock-tooltip {
+  position: absolute;
+  top: -44px;
+  left: 50%;
+  padding: 6px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: #7a3e1e;
+  background: rgba(245, 225, 210, 0.97);
+  border: 1px solid rgba(200, 140, 100, 0.3);
+  box-shadow: 0 4px 16px rgba(180, 100, 60, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(4px) scale(0.9);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.dock-tooltip::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  width: 8px;
+  height: 8px;
+  background: rgba(245, 225, 210, 0.97);
+  border-right: 1px solid rgba(200, 140, 100, 0.3);
+  border-bottom: 1px solid rgba(200, 140, 100, 0.3);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.dock-item:hover .dock-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
