@@ -35,6 +35,30 @@ export class Preloader extends EventEmitter {
     this.resources.on("ready", () => {
       this.playOutro();
     });
+
+    this._initDock();
+  }
+
+  _initDock() {
+    const dock = document.querySelector('.preloader__dock');
+    if (!dock) return;
+    const items = Array.from(dock.querySelectorAll('.dock-item'));
+    const magneticDist = 160;
+    const maxScale = 1.6;
+
+    dock.addEventListener('mousemove', (e) => {
+      items.forEach(item => {
+        const rect = item.getBoundingClientRect();
+        const center = rect.left + rect.width / 2;
+        const dist = Math.abs(e.clientX - center);
+        const scale = dist < magneticDist ? 1 + (maxScale - 1) * (1 - dist / magneticDist) : 1;
+        gsap.to(item, { scale, y: -(scale - 1) * 14, duration: 0.25, ease: 'power2.out', overwrite: 'auto' });
+      });
+    });
+
+    dock.addEventListener('mouseleave', () => {
+      gsap.to(items, { scale: 1, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.5)', overwrite: 'auto' });
+    });
   }
 
   onLoad(value) {
