@@ -240,97 +240,7 @@ body {
   color: #3d2b1f;
 }
 
-/* Preloader */
-.preloader {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: #f5ecd7;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-.preloader__inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-}
-
-.preloader__progress-wrapper {
-  width: 100%;
-  height: 2px;
-  background: #ddd0bc;
-  border-radius: 0;
-}
-
-.preloader__percent {
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  color: rgba(92, 61, 46, 0.55);
-  margin-top: 10px;
-}
-
-.preloader__progress-bar {
-  height: 100%;
-  width: 0%;
-  background: #8b9d77;
-  border-radius: 0;
-  transition: width 0.3s ease;
-}
-
-.preloader__intro {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  gap: 28px;
-  max-width: 440px;
-  padding: 0 24px;
-  text-align: center;
-}
-
-.preloader__description {
-  font-size: 15px;
-  line-height: 1.9;
-  color: rgba(92, 61, 46, 0.78);
-  letter-spacing: 0.01em;
-}
-
-.preloader__buttons {
-  display: flex;
-  flex-direction: row;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.preloader__btn {
-  padding: 11px 28px;
-  border-radius: 3px;
-  font-size: 13px;
-  font-family: "Lora", Georgia, serif;
-  letter-spacing: 0.07em;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.preloader__btn--primary {
-  background: #8b9d77;
-  color: #fff;
-  border: none;
-}
-
-.preloader__btn--primary:hover {
-  background: #7a8c68;
-}
-
-.preloader__btn--secondary {
-  background: transparent;
-  color: #5c3d2e;
-  border: 1.5px solid #c4a882;
-}
 
 .preloader__btn--secondary:hover {
   background: rgba(196, 168, 130, 0.15);
@@ -505,3 +415,116 @@ body {
   transform: translateX(-50%) translateY(0) scale(1);
 }
 
+
+
+/* ── Sticker fan preloader ─────────────────────────────────── */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #3a3a3a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preloader__card {
+  position: relative;
+  width: min(680px, 88vw);
+  height: 200px;
+  background: #efefef;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.preloader__stickers {
+  position: relative;
+  width: 340px;
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 24px;
+}
+
+.sticker {
+  position: absolute;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  transform: rotate(0deg) translateX(0px) translateY(0px);
+  opacity: 0;
+  transition: transform 0.55s cubic-bezier(0.34,1.56,0.64,1), opacity 0.35s ease;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.25));
+  cursor: default;
+}
+
+.sticker.active { opacity: 1; }
+
+.sticker__inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sticker__inner svg { width: 100%; height: 100%; }
+
+/* Fan positions — activated by .active class */
+.sticker--1.active { transform: rotate(-22deg) translateX(-148px) translateY(8px); }
+.sticker--2.active { transform: rotate(-13deg) translateX(-92px) translateY(4px); }
+.sticker--3.active { transform: rotate(-5deg)  translateX(-38px) translateY(0px); }
+.sticker--4.active { transform: rotate( 3deg)  translateX( 18px) translateY(2px); }
+.sticker--5.active { transform: rotate( 9deg)  translateX( 76px) translateY(6px); }
+.sticker--6.active { transform: rotate( 4deg)  translateX(132px) translateY(0px); }
+
+.sticker--6 .sticker__inner { border-radius: 0; background: none; overflow: visible; }
+
+.preloader__percent {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: #999;
+  font-family: "Lora", Georgia, serif;
+}
+
+.preloader__badge {
+  position: absolute;
+  bottom: 16px;
+  right: 20px;
+  width: 44px;
+  opacity: 0.45;
+}
+
+.preloader__badge svg { width: 100%; height: auto; }
+
+.preloader__intro {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 0 20px;
+  text-align: center;
+  position: absolute;
+  inset: 0;
+  justify-content: center;
+  background: #efefef;
+  border-radius: 22px;
+}
+
+.preloader__description {
+  font-size: 15px;
+  color: #555;
+  letter-spacing: 0.03em;
+}
+/* ── /Sticker fan preloader ────────────────────────────────── */
