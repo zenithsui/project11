@@ -6,61 +6,49 @@ export class Preloader extends EventEmitter {
   constructor() {
     super();
     this.experience = Experience.getInstance();
-    this.resources = this.experience.resources;
+    this.resources  = this.experience.resources;
 
-    this.preloader   = document.querySelector(".preloader");
-    this.percentText = document.querySelector(".preloader__percent");
-    this.introEl     = document.querySelector(".preloader__intro");
-    this.stickers    = Array.from(document.querySelectorAll(".sticker"));
+    this.preloaderEl   = document.getElementById("preloader");
+    this.percentEl     = document.getElementById("loading-percent");
+    this.introEl       = document.getElementById("preloader-intro");
+    this.loadingTextEl = document.querySelector(".loading-text");
 
-    document.getElementById("enter-btn").addEventListener("click", () => {
-      this.experience.world.raycaster?.toggleMusic?.();
-      this._dismiss();
-    });
-    document.getElementById("enter-silent-btn").addEventListener("click", () => {
-      this._dismiss();
-    });
+    document.getElementById("enter-btn").addEventListener("click", () => this._dismiss());
+    document.getElementById("enter-silent-btn").addEventListener("click", () => this._dismiss());
 
-    this.resources.on("progress", (value) => this.onLoad(value));
-    this.resources.on("ready",    () => this.playOutro());
+    this.resources.on("progress", (value) => this._onProgress(value));
+    this.resources.on("ready",    () => this._onReady());
 
     this._initDock();
   }
 
-  onLoad(value) {
-    const pct = Math.round(value * 100);
-    if (this.percentText) this.percentText.textContent = pct + "%";
-
-    // Fan stickers out progressively as load advances
-    const toShow = Math.min(Math.ceil(value * this.stickers.length), this.stickers.length);
-    this.stickers.forEach((s, i) => {
-      if (i < toShow && !s.classList.contains("active")) {
-        setTimeout(() => s.classList.add("active"), i * 80);
-      }
-    });
+  _onProgress(value) {
+    const pct = Math.round(Math.min(value, 1) * 100);
+    if (this.percentEl) this.percentEl.textContent = pct + "%";
   }
 
-  playOutro() {
-    // All stickers visible
-    this.stickers.forEach((s, i) => setTimeout(() => s.classList.add("active"), i * 60));
+  _onReady() {
+    if (this.percentEl) this.percentEl.textContent = "100%";
 
-    gsap.to(this.percentText, {
-      opacity: 0, duration: 0.3, delay: 0.6,
+    gsap.to(this.loadingTextEl, { opacity: 0, duration: 0.5, delay: 0.6 });
+    gsap.to(this.percentEl, {
+      opacity: 0, duration: 0.5, delay: 0.6,
       onComplete: () => {
-        if (this.percentText) this.percentText.style.display = "none";
+        if (this.loadingTextEl) this.loadingTextEl.style.display = "none";
+        if (this.percentEl) this.percentEl.style.display = "none";
         if (this.introEl) {
           this.introEl.style.display = "flex";
-          gsap.fromTo(this.introEl, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" });
+          gsap.fromTo(this.introEl, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" });
         }
       }
     });
   }
 
   _dismiss() {
-    gsap.to(this.preloader, {
-      opacity: 0, duration: 0.6, ease: "power2.inOut",
+    gsap.to(this.preloaderEl, {
+      opacity: 0, duration: 0.7, ease: "power2.inOut",
       onComplete: () => {
-        this.preloader.remove();
+        if (this.preloaderEl) this.preloaderEl.remove();
         this.emit("preloaderfinished");
       }
     });
@@ -70,7 +58,6 @@ export class Preloader extends EventEmitter {
     const dock = document.querySelector(".preloader__dock");
     if (!dock) return;
     const items = Array.from(dock.querySelectorAll(".dock-item"));
-
     dock.addEventListener("mousemove", (e) => {
       items.forEach(item => {
         const rect = item.getBoundingClientRect();
@@ -79,7 +66,6 @@ export class Preloader extends EventEmitter {
         gsap.to(item, { scale, y: -(scale - 1) * 14, duration: 0.25, ease: "power2.out", overwrite: "auto" });
       });
     });
-
     dock.addEventListener("mouseleave", () => {
       gsap.to(items, { scale: 1, y: 0, duration: 0.5, ease: "elastic.out(1,0.5)", overwrite: "auto" });
     });
