@@ -8,11 +8,8 @@ export class World {
     this.experience = Experience.getInstance();
 
     this.experience.resources.on("ready", () => {
-      // Dark background for horror theme
-      this.experience.scene.background = new THREE.Color(0x080808);
-
-      // Ambient so the model is visible regardless of spot light positions
-      const ambient = new THREE.AmbientLight(0xffffff, 2.0);
+      // Soft ambient so every surface of the horror model is at least visible
+      const ambient = new THREE.AmbientLight(0xffffff, 1.8);
       this.experience.scene.add(ambient);
 
       this.room = new Room();
